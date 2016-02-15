@@ -1,0 +1,17 @@
+{
+  "name": "knotorious",
+  "version": "0.0.1",
+  "description": "Note taking app with some advanced thingies",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.13.4",
+    "gun": "^0.3.2",
+    "material-design-lite": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
