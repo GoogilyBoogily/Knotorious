@@ -66,7 +66,7 @@ function createNewNote(data, noteId) {
     newNote.className = "demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop";
 
 	var noteTitle = document.createElement('div');
-	noteTitle.className = "mdl-card__title mdl-card--expand mdl-color--teal-300"
+	noteTitle.className = "mdl-card__title mdl-card--expand mdl-color--teal-300";
 	var noteTitleText = document.createElement('h2');
 	noteTitleText.className = "mdl-card__title-text";
 	noteTitleText.innerHTML = data;
