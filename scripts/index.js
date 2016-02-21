@@ -14,13 +14,19 @@ var gunNotes = gun.get('notes');
 
 $("#todo").keyup(function(event) {
     if(event.keyCode == 13){
-		gunNotes.path(Gun.text.random()).put($("#todo").val()); // add the HTML input's value to a random ID in the todo.
-		$("#todo").val(""); // clear out the input's value so we can add more.
+      var data = {};
+      data.title = $("#todo").val();
+      data.subtitle = "";
+		  gunNotes.path(Gun.text.random()).put(data); // add the HTML input's value to a random ID in the todo.
+		  $("#todo").val(""); // clear out the input's value so we can add more.
     } // end if
 });
 
 $("#todoButton").click(function(event) {
-	gunNotes.path(Gun.text.random()).put($("#todo").val()); // add the HTML input's value to a random ID in the todo.
+  var data = {};
+  data.title = $("#todo").val();
+  data.subtitle = "";
+	gunNotes.path(Gun.text.random()).put(data); // add the HTML input's value to a random ID in the todo.
 	$("#todo").val(""); // clear out the input's value so we can add more.
 });
 
@@ -55,14 +61,14 @@ function createNewNote(data, noteId) {
 	noteTitle.className = "mdl-card__title mdl-card--expand mdl-color--teal-300";
 	var noteTitleText = document.createElement('h2');
 	noteTitleText.className = "mdl-card__title-text";
-	noteTitleText.innerHTML = data;
+	noteTitleText.innerHTML = data.title;
 
 	noteTitle.appendChild(noteTitleText);
 	newNote.appendChild(noteTitle);
 
 	var noteSupportingTitle = document.createElement('div');
 	noteSupportingTitle.className = "mdl-card__supporting-text mdl-color-text--grey-600";
-	noteSupportingTitle.innerHTML = "Extra text area";
+	noteSupportingTitle.innerHTML = data.subtitle;
 
 	newNote.appendChild(noteSupportingTitle);
 
