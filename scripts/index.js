@@ -30,7 +30,7 @@ function editNote(noteId, field, newData) {
 	console.log("The field:", field);
 	console.log("With data:", newData);
 
-	
+
 } // end editNote()
 
 
@@ -38,12 +38,16 @@ function editNote(noteId, field, newData) {
 
 $("#todo").keyup(function(event) {
     if(event.keyCode == 13) {
-		createNote();
+		if ($("#todo").val() !== "") {
+			createNote();
+		} // end if()
     } // end if
 });
 
 $("#todoButton").click(function(event) {
-	createNote();
+	if ($("#todo").val() !== "") {
+		createNote();
+	} // end if()
 });
 
 
