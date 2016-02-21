@@ -10,49 +10,61 @@ it's just kind of its own standalone file
 var gun = Gun();
 var gunNotes = gun.get('notes');
 
+function createNote() {
+	var data = {};
+	data.title = $("#todo").val();
+	data.subtitle = "";
+
+	console.log("Adding note with data:", data);
+	gunNotes.path(Gun.text.random()).put(data); // add the HTML input's value to a random ID in the todo.
+	$("#todo").val(""); // clear out the input's value so we can add more.
+} // end createNote()
+
+function deleteNote(noteId) {
+	console.log("Deleting note with id:", noteId);
+	gunNotes.path(noteId).put(null);
+} // end deleteNote
+
+function editNote(noteId, field, newData) {
+	console.log("Editing note:", noteId);
+	console.log("The field:", field);
+	console.log("With data:", newData);
+
+	
+} // end editNote()
+
+
 
 
 $("#todo").keyup(function(event) {
-    if(event.keyCode == 13){
-      var data = {};
-      data.title = $("#todo").val();
-      data.subtitle = "";
-		  gunNotes.path(Gun.text.random()).put(data); // add the HTML input's value to a random ID in the todo.
-		  $("#todo").val(""); // clear out the input's value so we can add more.
+    if(event.keyCode == 13) {
+		createNote();
     } // end if
 });
 
 $("#todoButton").click(function(event) {
-  var data = {};
-  data.title = $("#todo").val();
-  data.subtitle = "";
-	gunNotes.path(Gun.text.random()).put(data); // add the HTML input's value to a random ID in the todo.
-	$("#todo").val(""); // clear out the input's value so we can add more.
+	createNote();
 });
 
 
-gunNotes.on().map(function(thought, id) {
-	console.log("thought, id:", thought, id);
+gunNotes.on().map(function(noteData, id) {
+	console.log("noteData, id:", data, id);
 
-	if (thought === null) {
+	if (noteData === null) {
 		var noteToDelete = $("#" + id);
 
+		// If the html element exists, remove it
 		if (noteToDelete) {
 			noteToDelete.remove();
 		} // end if
 	} else {
-		var newNote = createNewNote(thought, id);
+		var newNote = constructNewNote(noteData, id);
 		$("#todoListing").append(newNote);
 	} // end if/else
 });
 
-$('body').on('dblclick', 'li', function(event) {
-	gunNotes.path(this.id).put(null);
-});
 
-
-function createNewNote(data, noteId) {
-
+function constructNewNote(noteData, noteId) {
 	var newNote = document.createElement('div');
 	newNote.id = noteId;
     newNote.className = "demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop";
@@ -61,14 +73,14 @@ function createNewNote(data, noteId) {
 	noteTitle.className = "mdl-card__title mdl-card--expand mdl-color--teal-300";
 	var noteTitleText = document.createElement('h2');
 	noteTitleText.className = "mdl-card__title-text";
-	noteTitleText.innerHTML = data.title;
+	noteTitleText.innerHTML = noteData.title;
 
 	noteTitle.appendChild(noteTitleText);
 	newNote.appendChild(noteTitle);
 
 	var noteSupportingTitle = document.createElement('div');
 	noteSupportingTitle.className = "mdl-card__supporting-text mdl-color-text--grey-600";
-	noteSupportingTitle.innerHTML = data.subtitle;
+	noteSupportingTitle.innerHTML = noteData.subtitle;
 
 	newNote.appendChild(noteSupportingTitle);
 
@@ -79,8 +91,7 @@ function createNewNote(data, noteId) {
 	noteActionsLink.setAttribute("href", "#");
 	noteActionsLink.innerHTML = "Delete";
 	$(noteActionsLink).click(function () {
-		console.log("Deleting note with id:", noteId);
-		gunNotes.path(noteId).put(null);
+		deleteNote(noteId);
 	});
 
 
