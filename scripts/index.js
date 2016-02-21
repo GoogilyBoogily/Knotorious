@@ -24,34 +24,20 @@ $("#todoButton").click(function(event) {
 	$("#todo").val(""); // clear out the input's value so we can add more.
 });
 
-/*
-gunNotes.on(function(list) { // subscribe and listen to all updates on the todo.
-	var html = ''; // old school HTML strings! You should probably use a real template system.
-	for(field in list) { // iterate over the list to generate the HTML.
-		if(!list[field] || field == Gun._.meta) continue; // ignore nulled out values and metadata.
-		html += '<li>'
-			+ clean(list[field])
-			+ '<button style="float:right;" onclick=todone("'+ field +'")>X</button>'
-		+ '</li>';
-	}
-
-	$("#todos").innerHTML = html; // set the HTML to our new list.
-});
-
-
-window.todone = function(field){
-	gunNotes.path(field).put(null); // null out the todo item on this field ID.
-}
-*/
-
 
 gunNotes.on().map(function(thought, id) {
 	console.log("thought, id:", thought, id);
 
-	//var li = $('#' + id).get(0) || $('<li>').attr('id', id).appendTo('ul');
+	if (thought === null) {
+		var noteToDelete = $("#" + id);
 
-	var newNote = createNewNote(thought, id);
-	$("#todoListing").append(newNote);
+		if (noteToDelete) {
+			noteToDelete.remove();
+		} // end if
+	} else {
+		var newNote = createNewNote(thought, id);
+		$("#todoListing").append(newNote);
+	} // end if/else
 });
 
 $('body').on('dblclick', 'li', function(event) {
@@ -85,7 +71,12 @@ function createNewNote(data, noteId) {
 	var noteActionsLink = document.createElement('a');
 	noteActionsLink.className = "mdl-button mdl-js-button mdl-js-ripple-effect";
 	noteActionsLink.setAttribute("href", "#");
-	noteActionsLink.innerHTML = "Link";
+	noteActionsLink.innerHTML = "Delete";
+	$(noteActionsLink).click(function () {
+		console.log("Deleting note with id:", noteId);
+		gunNotes.path(noteId).put(null);
+	});
+
 
 	noteActions.appendChild(noteActionsLink);
 	newNote.appendChild(noteActions);
@@ -94,20 +85,6 @@ function createNewNote(data, noteId) {
 	componentHandler.upgradeElement(newNote);
 	return newNote;
 } // end createNewNote()
-
-/*
-<div class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
-	<div class="mdl-card__title mdl-card--expand mdl-color--teal-300">
-		<h2 class="mdl-card__title-text">Updates</h2>
-	</div>
-	<div class="mdl-card__supporting-text mdl-color-text--grey-600">
-		Non dolore elit adipisicing ea reprehenderit consectetur culpa.
-	</div>
-	<div class="mdl-card__actions mdl-card--border">
-		<a href="#" class="mdl-button mdl-js-button mdl-js-ripple-effect">Read More</a>
-	</div>
-</div>
-*/
 
 /*
 When creating new elements while using material design lite,
