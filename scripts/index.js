@@ -12,12 +12,12 @@ var gunNotes = gun.get('notes');
 
 function createNote() {
 	var data = {};
-	data.title = $("#todo").val();
+	data.title = $("#add-todo-textbox").val();
 	data.subtitle = "";
 
 	console.log("Adding note with data:", data);
 	gunNotes.path(Gun.text.random()).put(data); // add the HTML input's value to a random ID in the todo.
-	$("#todo").val(""); // clear out the input's value so we can add more.
+	$("#add-todo-textbox").val(""); // clear out the input's value so we can add more.
 } // end createNote()
 
 function deleteNote(noteId) {
@@ -36,23 +36,23 @@ function editNote(noteId, field, newData) {
 
 
 
-$("#todo").keyup(function(event) {
+$("#add-todo-textbox").keyup(function(event) {
     if(event.keyCode == 13) {
-		if ($("#todo").val() !== "") {
+		if ($("#add-todo-textbox").val() !== "") {
 			createNote();
 		} // end if()
     } // end if
 });
 
-$("#todoButton").click(function(event) {
-	if ($("#todo").val() !== "") {
+$("#add-todo-button").click(function(event) {
+	if ($("#add-todo-textbox").val() !== "") {
 		createNote();
 	} // end if()
 });
 
 
 gunNotes.on().map(function(noteData, id) {
-	console.log("noteData, id:", data, id);
+	console.log("noteData, id:", noteData, id);
 
 	if (noteData === null) {
 		var noteToDelete = $("#" + id);
@@ -62,8 +62,11 @@ gunNotes.on().map(function(noteData, id) {
 			noteToDelete.remove();
 		} // end if
 	} else {
-		var newNote = constructNewNote(noteData, id);
-		$("#todoListing").append(newNote);
+		// Check to see if the element already exists
+		if (!document.getElementById(id)) {
+			var newNote = constructNewNote(noteData, id);
+			$("#todoListing").prepend(newNote);
+		} // end if
 	} // end if/else
 });
 
@@ -71,7 +74,7 @@ gunNotes.on().map(function(noteData, id) {
 function constructNewNote(noteData, noteId) {
 	var newNote = document.createElement('div');
 	newNote.id = noteId;
-    newNote.className = "demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop";
+    newNote.className = "demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop";
 
 	var noteTitle = document.createElement('div');
 	noteTitle.className = "mdl-card__title mdl-card--expand mdl-color--teal-300";

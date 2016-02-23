@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.cyan-light_blue.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.1/material.cyan-blue.min.css">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -86,10 +86,19 @@
       <main class="mdl-layout__content mdl-color--grey-100">
         <div class="mdl-grid demo-content">
           <div class="demo-charts mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-			<input id="todo"/><button id="todoButton">Add</button>
-  			<ul id="todos"></ul>
+			  <div class="mdl-layout-spacer"></div>
+				  <form action="#">
+				    <div class="mdl-textfield mdl-js-textfield">
+				  	<input class="mdl-textfield__input" type="text" id="add-todo-textbox">
+				  	<label class="mdl-textfield__label" for="add-todo-textbox">Note...</label>
+				    </div>
+				  </form>
+				  <button id="add-todo-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+				  	Add
+				  </button>
+			  <div class="mdl-layout-spacer"></div>
           </div>
-        	<div id="todoListing" class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
+        	<div id="todoListing" class="demo-cards mdl-cell mdl-cell--12-col mdl-grid">
         	</div>
           </div>
 	  </main>
