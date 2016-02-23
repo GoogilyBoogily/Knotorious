@@ -71,10 +71,21 @@ gunNotes.on().map(function(noteData, id) {
 });
 
 
+
+var dialog = document.querySelector('dialog');
+if (! dialog.showModal) {
+	dialogPolyfill.registerDialog(dialog);
+}
+$("#dialog-modal-close").click(function() {
+	dialog.close();
+});
+
+
+
 function constructNewNote(noteData, noteId) {
 	var newNote = document.createElement('div');
 	newNote.id = noteId;
-    newNote.className = "demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-desktop";
+    newNote.className = "demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col";
 
 	var noteTitle = document.createElement('div');
 	noteTitle.className = "mdl-card__title mdl-card--expand mdl-color--teal-300";
@@ -104,6 +115,12 @@ function constructNewNote(noteData, noteId) {
 
 	noteActions.appendChild(noteActionsLink);
 	newNote.appendChild(noteActions);
+
+
+	$(newNote).click(function () {
+		$("#expanded-note-title").text(noteData.title);
+		dialog.showModal();
+	});
 
 
 	componentHandler.upgradeElement(newNote);
